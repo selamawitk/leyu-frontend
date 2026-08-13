@@ -878,6 +878,7 @@ export interface InvitationTask {
   max_invitations: number,
 }
 export interface Instruction {
+  id?: string,
   taskId: string,
   title: string,
   content: string,

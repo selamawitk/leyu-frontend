@@ -293,7 +293,7 @@ export const useDeleteInstruction = ({
             const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
             const response = await axios.delete(
-                `${baseUrl}/project-mgmt/task/${id}/instruction`,
+                `${baseUrl}/project-mgmt/task/${task_id}/instruction/${id}`,
                 {
                     headers: {
                         Authorization: `Bearer ${session.access_token}`,
@@ -333,7 +333,7 @@ export const EditInstruction = () => {
                 InstructionData.video_instruction_url = InstructionData.video_instruction_url === "" ? null : InstructionData.video_instruction_url;
                 InstructionData.audio_instruction_url = InstructionData.audio_instruction_url === "" ? null : InstructionData.audio_instruction_url;
                 const response = await axios.put<InvitationResponseData>(
-                    `${process.env.NEXT_PUBLIC_API_BASE_URL}/project-mgmt/task/${InstructionData.taskId}/instruction`,
+                    `${process.env.NEXT_PUBLIC_API_BASE_URL}/project-mgmt/task/${InstructionData.taskId}/instruction/${InstructionData.id}`,
                     InstructionData,
                     {
                         headers: {

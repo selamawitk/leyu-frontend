@@ -73,6 +73,7 @@ const EditTaskInstruction: React.FC<EditTaskInstructionProps> = ({
 
     try {
       editInstructionMutation.mutateAsync({
+        id: taskInstructions.id,
         title: formData.title,
         content: formData.content,
         video_instruction_url: formData.video_instruction_url? formData.video_instruction_url : "",

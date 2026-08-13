@@ -575,7 +575,7 @@ export function useSingleUserProfile(id: string) {
         }
         const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
         const response = await axios.get<SingleUserResponse>(
-          `${baseUrl}/iam/user/${id}`,
+          `${baseUrl}/iam/users/${id}`,
           {
             headers: {
               Authorization: `Bearer ${session.access_token}`,
@@ -610,7 +610,7 @@ export function useChangePassword() {
 
       const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
       const response = await axios.put(
-        `${baseUrl}/iam/users/change-password?uuid=15bc2137-0b08-449e-8e7e-c68f2e830bd5`,
+        `${baseUrl}/iam/users/change-password`,
         passwordData,
         {
           headers: {
@@ -647,8 +647,8 @@ export function useChangeimage() {
       }
 
       const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-      const response = await axios.post(
-        `${baseUrl}/iam/users/change-password?id=""`,
+      const response = await axios.put(
+        `${baseUrl}/iam/users/change-password`,
         passwordData,
         {
           headers: {
@@ -1170,7 +1170,7 @@ export function userFacilltatorContributorSubmissions({
         const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
         const response = await axios.get<UserProfilesRoleResponse>(
-          `${baseUrl}/pworkspace/data-set/facilitator/contributor/submissions/${taskID}/{params.toString()}`,
+          `${baseUrl}/workspace/data-set/facilitator/contributor/submissions/${taskID}?${params.toString()}`,
 
           {
             headers: {

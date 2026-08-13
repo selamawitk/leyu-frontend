@@ -470,7 +470,7 @@ export function useGetTaskMicroTaskResponseForFacilitator({
                     process.env.NEXT_PUBLIC_API_BASE_URL;
 
                 const response = await axios.get<NewTaskMicroTaskResponse>(
-                    `${baseUrl}//reviewer-task/my-tasks/${taskId}?${params.toString()}`,
+                    `${baseUrl}/reviewer-task/my-tasks/${taskId}?${params.toString()}`,
 
                     {
                         headers: {
@@ -526,7 +526,7 @@ export function useGetTaskMicroTaskResponseForReviewersSubmission({
                     process.env.NEXT_PUBLIC_API_BASE_URL;
 
                 const response = await axios.get<NewTaskMicroTaskResponse>(
-                    `${baseUrl}/reviewer-task/approve${taskId}?${params.toString()}`,
+                    `${baseUrl}/reviewer-task/my-tasks/${taskId}?${params.toString()}`,
 
                     {
                         headers: {
@@ -599,12 +599,14 @@ export const useFlagMicrotask = () => {
     return useMutation({
         mutationFn: async (payload: FlagPayload) => {
             var data = {
-                flag_type_id: payload.flag_type_id,
+                rejection_type_ids: [],
+                flag: true,
+                flag_type_ids: [payload.flag_type_id],
                 comment: payload.comment,
             };
             const response = await axios.put(
-                `${process.env.NEXT_PUBLIC_API_BASE_URL}/workspace/data-set/flag/${payload.microTaskId}`,
-                payload,
+                `${process.env.NEXT_PUBLIC_API_BASE_URL}/reviewer-task/reject/${payload.microTaskId}`,
+                data,
                 {
                     headers: { Authorization: `Bearer ${session?.access_token}` },
                 }

@@ -218,7 +218,7 @@ const MicroTaskListSubission: React.FC<MicroTaskListProps> = ({
   const approveMutation = useMutation({
     mutationFn: async (microTaskId: string) => {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/reviewer-task/approve/${microTaskId}`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/reviewer-task/approve/${microTaskId}`,
         {
           method: "PUT",
           headers: {
