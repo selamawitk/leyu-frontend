@@ -1,7 +1,7 @@
 import { TranslationKey } from '@/lib/i18n';
 
 // Define user roles
-export type UserRole = "SuperAdmin" | "ProjectManager" | "User" | "Reviewer" | "QualityAssurance" | "Facilitator" | null;
+export type UserRole = "SuperAdmin" | "ProjectManager" | "User" | "Reviewer" | "QualityAssurance" | "Facilitator" | "Contributor" | null;
 
 // Define menu item structure
 export interface MenuItem {
@@ -76,6 +76,18 @@ export const menuConfig: MenuItem[] = [
     roles: ["Facilitator"],
   },
   {
+    labelKey: "dashboard",
+    href: "/contributor",
+    iconName: "overview",
+    roles: ["Contributor"],
+  },
+  {
+    labelKey: "tasks",
+    href: "/contributor/tasks",
+    iconName: "projectManagement",
+    roles: ["Contributor"],
+  },
+  {
     labelKey: "baseData",
     href: "",
     iconName: "baseData",
@@ -132,6 +144,6 @@ export const menuConfig: MenuItem[] = [
     labelKey: "helpSupport",
     href: "/help",
     iconName: "help",
-    roles: ["SuperAdmin", "ProjectManager", "User", "Reviewer", "Facilitator","QualityAssurance"],
+    roles: ["SuperAdmin", "ProjectManager", "User", "Reviewer", "Facilitator","QualityAssurance", "Contributor"],
   },
 ];

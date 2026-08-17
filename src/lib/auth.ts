@@ -3,7 +3,29 @@ import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import axios from "axios";
 
-type UserRole = "SuperAdmin" | "ProjectManager" | "Facilitator" | "Reviewer" | "QualityAssurance";
+type UserRole = "SuperAdmin" | "ProjectManager" | "Facilitator" | "Reviewer" | "QualityAssurance" | "Contributor";
+
+declare module "next-auth" {
+  interface User {
+    access_token?: string;
+    username?: string;
+    first_name?: string;
+    last_name?: string;
+    middle_name?: string;
+    profile_picture?: string | null;
+  }
+  interface JWT {
+    id?: string;
+    role?: string;
+    access_token?: string;
+    expires_at?: number;
+    profile_picture?: string | null;
+    username?: string;
+    first_name?: string;
+    last_name?: string;
+    middle_name?: string;
+  }
+}
 
 interface ExtendedUser {
   id: string;
@@ -54,7 +76,7 @@ export const authOptions: NextAuthOptions = {
             profile_picture: responseData.user.profile_picture,
             role: responseData.user.role.name as UserRole,
             access_token: responseData.access_token,
-          };
+          } as any;
         } catch (error: any) {
           
           return null;

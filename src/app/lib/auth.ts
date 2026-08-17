@@ -7,7 +7,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import axios from "axios";
 
 // Match the role names exactly as they come from your API
-type UserRole = "SuperAdmin" | "ProjectManager" | "Facilitator" | "Reviewer" | "QualityAssurance";
+type UserRole = "SuperAdmin" | "ProjectManager" | "Facilitator" | "Reviewer" | "QualityAssurance" | "Contributor";
 
 interface ExtendedUser {
   id: string;
@@ -23,7 +23,7 @@ interface ExtendedUser {
   expires_at?: number;
 }
 
-interface ExtendedJWT extends JWT {
+interface ExtendedJWT extends Omit<JWT, 'role'> {
   id: string;
   role: UserRole;
   access_token: string;
@@ -33,6 +33,25 @@ declare module "next-auth" {
   interface Session {
     user: ExtendedUser;
     access_token: string;
+  }
+  interface User {
+    access_token?: string;
+    username?: string;
+    first_name?: string;
+    last_name?: string;
+    middle_name?: string;
+    profile_picture?: string | null;
+  }
+  interface JWT {
+    id?: string;
+    role?: string;
+    access_token?: string;
+    expires_at?: number;
+    profile_picture?: string | null;
+    username?: string;
+    first_name?: string;
+    last_name?: string;
+    middle_name?: string;
   }
 }
 
@@ -84,7 +103,7 @@ export const authOptions: NextAuthOptions = {
             profile_picture: responseData.user.profile_picture,
             role: responseData.user.role.name as UserRole, // Using role.name from your API
             access_token: responseData.access_token,
-          };
+          } as any;
         } catch (error: any) {
           console.error('Authentication error:', error.response?.data || error.message);
           return null;

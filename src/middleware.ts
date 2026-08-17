@@ -9,6 +9,7 @@ const roleRoutes: Record<string, string[]> = {
   Facilitator: ["/facilitator", "/facilitator/tasks", "/settings"],
   Reviewer: ["/reviewer", "/reviewer/tasks", "/settings"],
   QualityAssurance: ["/qualityAssurance", "/qualityAssurance/tasks", "/settings"],
+  Contributor: ["/contributor", "/contributor/tasks", "/settings"],
 };
 
 // Add "/tasks" route to allowed paths for relevant roles
