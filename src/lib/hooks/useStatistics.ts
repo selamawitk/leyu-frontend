@@ -270,3 +270,92 @@ export function useSingleSuperAdminDatasetLanguage(view_type: string) {
         },
     });
 }
+
+export function useLeaderboard(project_id?: string) {
+    const { data: session } = useSession();
+    return useQuery({
+        queryKey: ["leaderboard", project_id],
+        queryFn: async () => {
+            try {
+                if (!session?.access_token) {
+                    throw new Error("No authentication token available");
+                }
+                const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+                const params = project_id ? `?project_id=${project_id}` : '';
+                const response = await axios.get(
+                    `${baseUrl}/statistics/project/leaderboard${params}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${session.access_token}`,
+                        },
+                    }
+                );
+                return response.data;
+            } catch (error) {
+                if (axios.isAxiosError(error)) {
+                    const message =
+                        error.response?.data?.message || "Failed to fetch leaderboard";
+                    toast.error("Error", { description: message });
+                }
+                throw error;
+            }
+        },
+        enabled: !!session?.access_token,
+        retry: (failureCount, error) => {
+            if (error.message === "No authentication token available") return false;
+            return failureCount < 2;
+        },
+    });
+}
+
+export interface TaskProgressEntry {
+    task_id: string;
+    task_name: string;
+    task_type: string;
+    is_closed: boolean;
+    total_micro_tasks: number;
+    total_submitted: number;
+    total_approved: number;
+    total_rejected: number;
+    total_pending: number;
+    accuracy_rate: number;
+    completion_rate: number;
+}
+
+export function useTaskProgress(project_id?: string) {
+    const { data: session } = useSession();
+    return useQuery<TaskProgressEntry[]>({
+        queryKey: ["taskProgress", project_id],
+        queryFn: async () => {
+            try {
+                if (!session?.access_token) {
+                    throw new Error("No authentication token available");
+                }
+                const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+                const params = project_id ? `?project_id=${project_id}` : '';
+                const response = await axios.get(
+                    `${baseUrl}/statistics/project/task-progress${params}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${session.access_token}`,
+                        },
+                    }
+                );
+                const body = response.data;
+                return Array.isArray(body) ? body : body?.data ?? [];
+            } catch (error) {
+                if (axios.isAxiosError(error)) {
+                    const message =
+                        error.response?.data?.message || "Failed to fetch task progress";
+                    toast.error("Error", { description: message });
+                }
+                throw error;
+            }
+        },
+        enabled: !!session?.access_token,
+        retry: (failureCount, error) => {
+            if (error.message === "No authentication token available") return false;
+            return failureCount < 2;
+        },
+    });
+}

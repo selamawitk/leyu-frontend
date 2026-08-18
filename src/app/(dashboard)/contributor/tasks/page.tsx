@@ -22,9 +22,9 @@ export default function ContributorTasks() {
     searchQuery: debouncedSearch,
   });
 
-  const tasks = tasksData?.data || [];
-  const totalPages = tasksData?.totalPages || 1;
-  const totalElements = tasksData?.total || 0;
+  const tasks = tasksData?.data?.result || [];
+  const totalPages = tasksData?.data?.totalPages || 1;
+  const totalElements = tasksData?.data?.total || 0;
   const startRecord = tasks.length ? (page - 1) * pageSize + 1 : 0;
   const endRecord = Math.min(page * pageSize, totalElements);
 

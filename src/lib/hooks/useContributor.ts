@@ -2,6 +2,7 @@ import axios from "axios";
 import { toast } from "sonner";
 import { useSession } from "next-auth/react";
 import { useQuery } from "@tanstack/react-query";
+import { PaginationResponse } from "@/app/types/global";
 
 export interface ContributorTask {
   id: string;
@@ -22,13 +23,7 @@ export interface ContributorTask {
   earning_per_task: number | null;
 }
 
-interface ContributorTasksResponse {
-  data: ContributorTask[];
-  total: number;
-  page: number;
-  limit: number;
-  totalPages: number;
-}
+interface ContributorTasksResponse extends PaginationResponse<ContributorTask> {}
 
 interface UseContributorTasksProps {
   page: number;

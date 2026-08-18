@@ -12,9 +12,9 @@ export default function ContributorDashboard() {
   const [pageSize] = useState(20);
   const { data: tasksData, isLoading } = useContributorTasks({ page, pageSize });
 
-  const tasks = tasksData?.data || [];
+  const tasks = tasksData?.data?.result || [];
 
-  const totalTasks = tasks.length;
+  const totalTasks = tasksData?.data?.total || 0;
   const completedTasks = tasks.filter((t) => t.status === "COMPLETED").length;
   const pendingTasks = tasks.filter((t) => t.status === "NEW" || t.status === "UNDER_REVIEW").length;
   const rejectedTasks = tasks.filter((t) => t.status === "REJECTED" || t.status === "TEST_REJECTED").length;
