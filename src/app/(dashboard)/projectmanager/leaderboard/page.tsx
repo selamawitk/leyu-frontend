@@ -7,7 +7,7 @@ import { Trophy, Medal, Award, Crown, Users, Loader2 } from "lucide-react";
 
 export default function LeaderboardPage() {
   const [selectedProject, setSelectedProject] = useState<string>("");
-  const { data: projects } = MyProjectProfiles({ page: 1, pageSize: 100 });
+  const { data: projects } = MyProjectProfiles({ page: 1, pageSize: 100, filters: {} });
   const {
     data: leaderboardData,
     isLoading,

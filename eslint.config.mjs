@@ -11,8 +11,8 @@ const compat = new FlatCompat({
 
 const eslintConfig = [
   ...compat.config({
+    plugins: ["react-hooks"],
     rules: {
-      // Existing rules
       "react/no-unescaped-entities": "off",
       "@next/next/no-page-custom-font": "off",
       "react-hooks/rules-of-hooks": "error",
