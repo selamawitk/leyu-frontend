@@ -146,7 +146,6 @@ const AddMicroTaskDialog: React.FC<AddMicroTaskDialogProps> = ({
           complete: (result) => {
             const data = result.data;
             const requiredColumns: string[] = ["no", "text"];
-            const allColumns:string[]=["name","text","taskId","category","intent"];
             const headers: string[] = result.meta.fields || [];
 
             const missingColumns = requiredColumns.filter(
@@ -161,7 +160,7 @@ const AddMicroTaskDialog: React.FC<AddMicroTaskDialogProps> = ({
             }
 
             const validRows: CsvRow[] = data.filter((row) =>
-              allColumns.every((col) => row[col]?.toString().trim())
+              requiredColumns.every((col) => row[col]?.toString().trim())
             );
 
             if (validRows.length === 0) {
